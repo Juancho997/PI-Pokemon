@@ -29,10 +29,6 @@ const validate = (pokeStats) => { //hacerlo mas específico en el back=> regex
     return errors;
 }
 
-function capitalize(s) {
-    return s && s[0].toUpperCase() + s.slice(1);
-}
-
 export default function Create() {
 
     const baseStats = {
@@ -268,7 +264,7 @@ export default function Create() {
                             <option>Type</option>
                             {
                                 allTypes && allTypesSorted.map(t => {
-                                    return <option key={t.name} id={t.id} value={t.name}>{capitalize(t.name)}</option>
+                                    return <option key={t.name} id={t.id} value={t.name}>{t.name}</option>
                                 })
 
                             }
@@ -285,7 +281,7 @@ export default function Create() {
                             pokeStats.types.map(t =>
                                 <div  key={t}>
                                     {/* <p style={{color: "white"}} className="types" >{capitalize(t)}</p> */}
-                                    <button id="Button" onClick={() => handleDelete(t)}>Remove {capitalize(t)} type</button>
+                                    <button id="Button" onClick={() => handleDelete(t)}>Remove {t} type</button>
                                 </div>)
                         }
                     </div>

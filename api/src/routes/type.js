@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const axios = require('axios');
 const { Type } = require('../db');
+const { capitalize } = require('../controllers');
 
 const router = Router();
 
@@ -14,9 +15,6 @@ router.get('/', async (req, res, next) => {
     try {
         const check = await Type.findAll();
         
-        // function capitalize(s) {
-        //     return s && s[0].toUpperCase() + s.slice(1);
-        // }
 
         if (check.length > 0) {
             res.send(check);
@@ -26,7 +24,7 @@ router.get('/', async (req, res, next) => {
 
             const pokeTypes = apiTypes.data.results.map(type => {
                 return {
-                    name:type.name
+                    name:capitalize(type.name)
                 }
             });
 

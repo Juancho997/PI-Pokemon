@@ -9,9 +9,6 @@ import SearchBar from './SearchBar';
 
 
 
-function capitalize(s) {
-    return s && s[0].toUpperCase() + s.slice(1);
-}
 
 export default function Home() {
 
@@ -94,7 +91,7 @@ export default function Home() {
                         allTypes ?
                             allTypes.map(t => {
                                 return (
-                                    <option key={t.name} value={t.name}>{capitalize(t.name)}</option>
+                                    <option key={t.name} value={t.name}>{t.name}</option>
                                 )
                             })
                             :

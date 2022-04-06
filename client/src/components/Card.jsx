@@ -1,25 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+function capitalize(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+}
+
 
 export default function Card({ id, name, image, types }) {
     return (
 
-        <div>
-            <img src={image} width='200' heigth='200' alt='Img not found' />
-            <Link to={`/pokemons/${id}`}>
-                <h1>{name}</h1>
+        <div id='cardContainer'>
+            <div id="cardImgDiv" >
+                <img id="cardImg" src={image} width='200' heigth='200' alt='Img not found' />
+            </div>
+
+            <Link to={`/pokemons/${id}`} id="cardName">
+                <h3>{name}</h3>
             </Link>
+            <div id="cardTypes">
             {
                 typeof types[0] === 'string' ?
                     types.map(t => {
-                        return <li key={t}>{t}</li>
+                        return <h4 key={t}>{capitalize(t)}</h4>
                     })
                     :
                     types.map(t => {
-                        return <li key={t.name}>{t.name}</li>
+                        return <h4 key={t.name}>{capitalize(t.name)}</h4>
                     })
             }
+            </div>
         </div>
 
 

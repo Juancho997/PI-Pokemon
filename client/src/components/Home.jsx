@@ -8,68 +8,71 @@ import Paginado from './Paginado';
 import SearchBar from './SearchBar';
 
 
-// function capitalize(s) {
-//     return s && s[0].toUpperCase() + s.slice(1);
-// }
 
-export default function Home(){
-    
+function capitalize(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+}
+
+export default function Home() {
+
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.loadedPokemons);
-    const allTypes = useSelector((state)=> state.pokeTypes)
-    
+    const allTypes = useSelector((state) => state.pokeTypes)
+
     const [currentPage, setCurrentPage] = useState(1)
     const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
     const indexOfirstPokemon = indexOfLastPokemon - pokemonsPerPage;
     const currentPokemons = allPokemons.slice(indexOfirstPokemon, indexOfLastPokemon)
     const [order, setOrder] = useState('');
-    
+
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     };
-    
+
     const handleClick = (e) => {
         e.preventDefault();
         dispatch(getPokemons());
     };
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         dispatch(getPokemons());
-        dispatch(getTypes())        
+        dispatch(getTypes())
     }, [dispatch]);
 
-    const handleFilterType = (e) =>{
+    const handleFilterType = (e) => {
         dispatch(filterByType(e.target.value));
     };
 
 
-    const handleFilterSource = (e) =>{
+    const handleFilterSource = (e) => {
         dispatch(filterBySource(e.target.value));
     };
 
-    const handleSortAZ = (e) =>{
+    const handleSortAZ = (e) => {
         e.preventDefault();
         dispatch(orderByName(e.target.value))
         setCurrentPage(1);
         setOrder(`Ordered ${e.target.value}`)
     };
 
-    const handleSortAttack = (e)=>{
+    const handleSortAttack = (e) => {
         e.preventDefault();
         dispatch(orderByAttack(e.target.value))
         setCurrentPage(1)
         setOrder(`Ordered ${e.target.value}`)
     };
 
-    return(
-        <div>
-            <h1>Pokédex</h1>
-
-            <button onClick={e => { handleClick(e) }}>Refresh</button>
+    return (
+        <div className="container">
 
             <div>
+                <button className="titleButton" onClick={e => { handleClick(e) }}><img src="https://i.pinimg.com/originals/bd/cd/20/bdcd20f5411ee5785889542d303ad4cb.png" alt="img err" height="100px" /></button>
+            </div>
+
+
+            <div id='filsortContainer'>
 
                 {/* order */}
                 <select onChange={e => handleSortAZ(e)} >
@@ -85,52 +88,63 @@ export default function Home(){
                 </select>
 
                 {/* filter */}
-                <select onChange={e=> handleFilterType(e)}>
+                <select onChange={e => handleFilterType(e)}>
                     <option value='All'>Types</option>
-                {
-                    allTypes? 
-                    allTypes.map(t=>{
-                        return (
-                            <option key ={t.name} value={t.name}>{t.name}</option>
-                        )
-                    })
-                    :
-                    <option>No types loaded</option>
+                    {
+                        allTypes ?
+                            allTypes.map(t => {
+                                return (
+                                    <option key={t.name} value={t.name}>{capitalize(t.name)}</option>
+                                )
+                            })
+                            :
+                            <option>No types loaded</option>
 
-                }
+                    }
                 </select>
 
                 <select onChange={e => handleFilterSource(e)}>
-                    <option value = "All">All</option>
-                    <option value = "api">Stored in Api</option>
-                    <option value = "db">Created By User</option>
+                    <option value="All">All</option>
+                    <option value="api">Stored in Api</option>
+                    <option value="db">Created By User</option>
                 </select>
             </div>
 
+            <div className='actionContainer'>
+                
+                <div>
+                <SearchBar />
+                </div>
+                
+                <div>
+                    <Link to='/create' >
+                        <button id='Button'>Create your Pokémon</button>
+                    </Link>
+                </div>
 
-            <SearchBar />
+                
+            </div>
 
-            <Link to ='/create'>
-                <button>Create your Pokémon</button>
-            </Link>
 
-            {/* Pokémon render */}
             <Paginado
                 pokemonsPerPage={pokemonsPerPage}
                 allPokemons={allPokemons.length} //need numeric value
                 paginado={paginado}
             />
 
+            {/* Pokémon render */}
+            <div id="Cards">
             {
-                currentPokemons?.map(p =>{
-                    return <Card 
-                    key={p.id}
-                    id={p.id} 
-                    name={p.name}
-                    image={p.image}
-                    types={p.types}  />
+                currentPokemons?.map(p => {
+                    return <Card
+                        key={p.id}
+                        id={p.id}
+                        name={p.name}
+                        image={p.image}
+                        types={p.types} />
                 })
             }
+            </div>
 
         </div>
     )

@@ -27,6 +27,7 @@ export default function SearchBar(){
             />
 
             <button
+            id="Button"
             type = 'submit'
             onClick={(e)=>handleSubmit(e)}>
             Find it!

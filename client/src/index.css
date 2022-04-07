@@ -2,14 +2,12 @@
 body {
   margin: 0;
   font-family: "Flexo-Regular",arial,sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 
@@ -46,10 +44,14 @@ div select:hover{
   color:  rgba(234, 217, 242, 0.89);
   background: #1f1d1d;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 
 /* LandingPage */
+
+
+
 .initContainer{
   background-image:url("https://img.wallpapersafari.com/desktop/1920/1080/29/88/8V4tmW.jpg");
   background-repeat: no-repeat;
@@ -74,7 +76,6 @@ div select:hover{
 .initButton	{
 width: 560px;
 height: 100px;
-animation: anim-glow 2s ease infinite;
 } 
 
 
@@ -155,7 +156,14 @@ animation: anim-glow 2s ease infinite;
 
 #cardName{
   text-decoration: none;
-  color :rgba(234, 217, 242, 0.89);
+  color :#000000;
+  text-align: center;
+}
+
+#cardName h3{
+  background-color: rgba(234, 217, 242, 0.89);
+  padding: 0.5em 0.2em 0.8em 0.5em;
+  text-align: center;  
 }
 
 #cardTypes{
@@ -163,13 +171,17 @@ animation: anim-glow 2s ease infinite;
   justify-content:space-evenly;
   align-items: center;
   margin-bottom: 10px;
+  margin-left: 25px;
+  margin-right: 25px;
   color :rgba(234, 217, 242, 0.89);
+  background-color: rgba(0, 0, 0, 0.89);
 };
+
+
 
 #cardImgDiv{
   background: rgba(234, 217, 242, 0.89);  /*alrededor de la foto*/
   border-radius: 4px;
-
 }
 
 #cardImg{
@@ -272,7 +284,6 @@ ul {
     min-width: 100vh;
 }
 
-
 #form{
   display: flex;
   flex-direction: row;
@@ -283,7 +294,6 @@ ul {
   display: flex;
   flex-direction: column;
 }
-
 
 
 #previewImgDiv{

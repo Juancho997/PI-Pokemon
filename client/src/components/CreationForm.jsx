@@ -1,81 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { createPokemon, getTypes } from '../actions';
+import { validate, sortDesc, baseStats } from '../controllers';
+import HomeButton from "./HomeButton";
 
-// MODULARRRRR
-const validate = (pokeStats) => { //hacerlo mas específico en el back=> regex
-    let errors = {};
-    if (!pokeStats.name) {
-        errors.name = 'A valid  name is required';
-    } else if (!pokeStats.image) {
-        errors.image = 'You must add a picture of your Pokémon.'
-    } else if (!pokeStats.hp || pokeStats.hp <= 0) {
-        errors.hp = 'Is your Pokémon even alive? Add some health points!'
-    } else if (!pokeStats.attack || pokeStats.attack <= 0) {
-        errors.attack = 'Your Pokémon doesn´t even make a scratch. Add some attack points.'
-    } else if (!pokeStats.defense || pokeStats.defense <= 0) {
-        errors.defense = 'Your Pokémon is too weak! Make it tougher.'
-    } else if (!pokeStats.speed || pokeStats.speed <= 0) {
-        errors.speed = 'Your Pokémon doesn´t even move! Give it some speed value.'
-    } else if (!pokeStats.height || pokeStats.height <= 0) {
-        errors.height = 'Your Pokémon is microscopic! Make it taller!.'
-    } else if (!pokeStats.weight || pokeStats.weight <= 0) {
-        errors.weight = 'Your Pokémon is ligther than a feather! You should add some pounds on it.'
-    } else if (pokeStats.types.length === 0 || pokeStats.types[0] === "Type" || pokeStats.types[1] === "Type") {
-        errors.types = 'Your Pokémon must have one or two types.'
-    }
-
-    return errors;
-}
 
 export default function Create() {
 
-    const baseStats = {
-        name: '',
-        image: '',
-        hp: '',
-        attack: '',
-        defense: '',
-        speed: '',
-        height: '',
-        weight: '',
-        types: []
-    }
-
     const [pokeStats, setPokeStats] = useState(baseStats);
-
     const [errors, setErrors] = useState({});
 
-    // img preview
-    const [img, setImg] = useState(null);
-    const [preview, setPreview] = useState('');
-    const fileInputRef = useRef();
+    const allTypes = useSelector(state => state.pokeTypes)
+    const allTypesSorted = allTypes.sort(sortDesc)
 
     const dispatch = useDispatch();
-
-    const allTypes = useSelector(state => state.pokeTypes)
-    function sortDesc(a, b) {
-        if (a.name < b.name) return -1
-        else if (a.name > b.name) return 1
-        return 0
-    };
-    const allTypesSorted = allTypes.sort(sortDesc)
 
     useEffect(() => {
         dispatch(getTypes());
     }, [dispatch]);
 
+
+    const [img, setImg] = useState(null);
+    const [preview, setPreview] = useState('');
+    const fileInputRef = useRef();
+
     useEffect(() => {
         if (pokeStats.image) {
-
             setPreview(pokeStats.image);
-
         } else {
             setPreview(null);
         }
-
     }, [pokeStats.image])
+
 
     const handleChange = (e) => {
 
@@ -100,7 +56,7 @@ export default function Create() {
                 [e.target.name]: e.target.value
             }));
 
-            if (pokeStats.image){
+            if (pokeStats.image) {
                 setImg(pokeStats.image);
 
             } else {
@@ -136,17 +92,14 @@ export default function Create() {
 
 
 
-
     return (
 
         <div id="divContainer">
 
-            <Link to='/home'>
-                <button className="titleButton"><img src="https://i.pinimg.com/originals/bd/cd/20/bdcd20f5411ee5785889542d303ad4cb.png" alt="img err" height="100px" /></button>
-            </Link>
-
+            <HomeButton />
 
             <h1>Add your Pokémon to the Pokédex</h1>
+
             <div id="divForm">
 
                 <form id="form" onSubmit={(e) => { handleSubmit(e) }}>
@@ -167,7 +120,6 @@ export default function Create() {
                                 </div>
                             )
                         }
-
 
                         <input
                             id="inputHp"
@@ -279,8 +231,7 @@ export default function Create() {
 
                         {
                             pokeStats.types.map(t =>
-                                <div  key={t}>
-                                    {/* <p style={{color: "white"}} className="types" >{capitalize(t)}</p> */}
+                                <div key={t}>
                                     <button id="Button" onClick={() => handleDelete(t)}>Remove {t} type</button>
                                 </div>)
                         }
@@ -303,26 +254,34 @@ export default function Create() {
                             )
                         }
                         {
-                            preview && 
-                                <div id="previewImgDiv">
-                                    <img
-                                        id="previewImg"
-                                        src={pokeStats.image}
-                                        onClick={() => {
-                                            setImg(null);
-                                            setPokeStats({
-                                                ...pokeStats,
-                                                image: ""
-                                            });
-                                        }}
-                                    />
-                                    <p id="previewText">Click the image to change it</p>
-                                </div>
+                            preview &&
+                            <div id="previewImgDiv">
+                                <img
+                                    id="previewImg"
+                                    src={pokeStats.image}
+                                    onClick={() => {
+                                        setImg(null);
+                                        setPokeStats({
+                                            ...pokeStats,
+                                            image: ""
+                                        });
+                                    }}
+                                />
+                                <p id="previewText">Click the image to change it</p>
+                            </div>
                         }
-                          
+
                     </div>
                     {
-                        pokeStats.name && pokeStats.image && pokeStats.hp && pokeStats.attack && pokeStats.defense && pokeStats.speed && pokeStats.height && pokeStats.weight && pokeStats.types.length > 0 ?
+                        pokeStats.name &&
+                            pokeStats.image &&
+                            pokeStats.hp &&
+                            pokeStats.attack &&
+                            pokeStats.defense &&
+                            pokeStats.speed &&
+                            pokeStats.height &&
+                            pokeStats.weight &&
+                            pokeStats.types.length > 0 ?
                             <div id="divCreateBttn">
                                 <button id="Button" type='submit'>Ok!</button>
                             </div>

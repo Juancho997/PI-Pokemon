@@ -8,8 +8,6 @@ import Paginado from './Paginado';
 import SearchBar from './SearchBar';
 
 
-
-
 export default function Home() {
 
     const dispatch = useDispatch();
@@ -65,13 +63,17 @@ export default function Home() {
         <div className="container">
 
             <div>
-                <button className="titleButton" onClick={e => { handleClick(e) }}><img src="https://i.pinimg.com/originals/bd/cd/20/bdcd20f5411ee5785889542d303ad4cb.png" alt="img err" height="100px" /></button>
+                <button className="titleButton" >
+                    <img 
+                    src="https://i.pinimg.com/originals/bd/cd/20/bdcd20f5411ee5785889542d303ad4cb.png" 
+                    alt="img err" 
+                    height="100px" />
+                </button>
             </div>
 
 
             <div id='filsortContainer'>
 
-                {/* order */}
                 <select onChange={e => handleSortAZ(e)} >
                     <option value="All">Alphabetical</option>
                     <option value="AZ">A to Z</option>
@@ -84,14 +86,13 @@ export default function Home() {
                     <option value="atkAsc">Less attack points</option>
                 </select>
 
-                {/* filter */}
                 <select onChange={e => handleFilterType(e)}>
                     <option value='All'>Types</option>
                     {
                         allTypes ?
                             allTypes.map(t => {
                                 return (
-                                    <option key={t.name} value={t.name}>{t.name}</option>
+                                    <option key={t.name} value={t.name.toLowerCase()}>{t.name}</option>
                                 )
                             })
                             :
@@ -110,7 +111,7 @@ export default function Home() {
             <div className='actionContainer'>
                 
                 <div>
-                <SearchBar />
+                    <SearchBar />
                 </div>
                 
                 <div>
@@ -119,7 +120,6 @@ export default function Home() {
                     </Link>
                 </div>
 
-                
             </div>
 
 
@@ -129,7 +129,6 @@ export default function Home() {
                 paginado={paginado}
             />
 
-            {/* Pokémon render */}
             <div id="Cards">
             {
                 currentPokemons?.map(p => {

@@ -14,7 +14,7 @@ export default function SearchBar(){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        dispatch(getPokemonByName(name)); //name === localState
+        dispatch(getPokemonByName(name));
         setName('');
     }
     

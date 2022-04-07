@@ -46,7 +46,7 @@ export default function rootReducer(state = initialState, action) {
                 loadedPokemons: action.payload === 'All' ? allPokemons : createdFilter
             };
 
-        case 'FILTER_BY_TYPE': //not working with User´s
+        case 'FILTER_BY_TYPE':
             const allPokemonTypes = state.allPokemons;
             const filterTypes = action.payload === 'All' ? allPokemonTypes : allPokemonTypes.filter(pk => pk.types.includes(action.payload) || pk.types.name === action.payload)
             return {

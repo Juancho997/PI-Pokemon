@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPokemon, getTypes } from '../actions';
 import { validate, sortDesc, baseStats } from '../controllers';
-import HomeButton from "./HomeButton";
+import HomeButton from "..common/HomeButton";
 
 
 export default function Create() {

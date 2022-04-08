@@ -72,6 +72,3 @@ export function sortDesc(a, b) {
     else if (a.name > b.name) return 1
     return 0
 };
-
-
-

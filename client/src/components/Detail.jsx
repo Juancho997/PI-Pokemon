@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonById } from '../actions';
-import HomeButton from "..common/HomeButton";
+import HomeButton from "../common/HomeButton";
 
 
 export default function Detail() {

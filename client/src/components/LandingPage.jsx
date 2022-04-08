@@ -1,5 +1,5 @@
 import React from "react";
-import HomeButton from "..common/HomeButton";
+import HomeButton from "../common/HomeButton";
 
 
 

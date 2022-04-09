@@ -75,7 +75,7 @@ router.post('/', async (req, res, next) => {
 
         await newPokemon.addType(dbTypes);
 
-        res.send('New Pokemon created!');
+        res.send('New Pokemon created!'); //pokename -- sweetAlert lib
 
 
     } catch (err) {

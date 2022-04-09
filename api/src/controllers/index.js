@@ -33,8 +33,8 @@ async function getApiData() {
         .then((data) => {
             return data.data.results;
         })
-        .then((data) => {
-            return Promise.all(data.map((res) => axios.get(res.url)));
+        .then((results) => {
+            return Promise.all(results.map((res) => axios.get(res.url)));
         })
         .then((data) => {
             return data.map((res) => res.data);

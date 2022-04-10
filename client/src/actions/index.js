@@ -71,6 +71,16 @@ export function createPokemon(payload) {
     }
 }
 
+export function deletePokemon(id){
+    return async function(dispatch){
+        const response = await axios.delete(`http://localhost:3001/api/pokemons/${id}`);
+        return dispatch({
+            type : 'DELETE_POKEMON',
+            payload : response.data
+        })
+    }
+}
+
 
 export function filterBySource(payload) {
     return {

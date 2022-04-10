@@ -31,6 +31,10 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
             }
+        case 'DELETE_POKEMON':
+            return{
+                ...state
+            }
 
         case 'GET_TYPES':
             return {

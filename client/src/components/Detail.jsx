@@ -1,20 +1,46 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonById } from '../actions';
+import { getPokemonById, deletePokemon } from '../actions';
 import HomeButton from "../common/HomeButton";
-
+import swal from 'sweetalert';
 
 export default function Detail() {
 
     const dispatch = useDispatch();
     const { id } = useParams();
+ 
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getPokemonById(id))
     }, []);
 
     const pokemon = useSelector(state => state.pokemonDetail);
+
+    const handleDeletePokemon = (e) => {
+        e.preventDefault();
+        swal({
+            title: "Delete Pokémon",
+            text: "Are you sure you want to delete this Pokémon? This action cannot be undone",
+            icon: "warning",
+            buttons: ["No", "Yes"]
+        })
+            
+        .then(response => {
+            if (response) {
+                swal({
+                    text: "Pokémon successfully deleted",
+                    icon: "success"
+                })}
+                dispatch(deletePokemon(pokemon.id));
+                navigate('/home');
+            })
+    };
+
+
+
+
     return (
         <div id="detailDiv">
 
@@ -44,6 +70,9 @@ export default function Detail() {
                     </div>
 
                 </div>
+                {
+                    id.includes("-") && <button onClick={(e) => handleDeletePokemon(e)}>Delete Pokémon</button>
+                }
 
             </div>
 

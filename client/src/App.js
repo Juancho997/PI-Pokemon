@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Detail from './components/Detail';
-import CreationForm from './components/CreationForm';
+import CreatePokemon from './components/CreatePokemon';
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/home' element={<Home />} />
           <Route path='/pokemons/:id' element={<Detail />} />
-          <Route path='/create' element={<CreationForm />} />
+          <Route path='/create' element={<CreatePokemon />} />
         </Routes>
       </div>
     </BrowserRouter>

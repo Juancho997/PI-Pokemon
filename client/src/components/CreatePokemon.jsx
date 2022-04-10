@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import { createPokemon, getTypes } from '../actions';
 import { validate, sortDesc, baseStats } from '../controllers';
+import swal from 'sweetalert';
 import HomeButton from "../common/HomeButton";
 
 
@@ -74,14 +76,25 @@ export default function Create() {
         }
     };
 
+    const navigate = useNavigate();
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(createPokemon(pokeStats));
         console.log(pokeStats)
         setPokeStats(baseStats);
-        alert('Pokémon created');
+        swal({
+            title: `${pokeStats.name} created!`,
+            icon: "success",
+            button: "Ok!"
+        }).then(response =>{
+            if(response){
+                navigate(-1);
+            }
+        })
     };
+
 
     const handleDelete = (el) => {
         setPokeStats({
@@ -258,6 +271,7 @@ export default function Create() {
                             <div id="previewImgDiv">
                                 <img
                                     id="previewImg"
+                                    alt="previewImg"
                                     src={pokeStats.image}
                                     onClick={() => {
                                         setImg(null);

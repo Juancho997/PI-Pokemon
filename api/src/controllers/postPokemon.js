@@ -25,7 +25,7 @@ const { Pokemon, Type } = require('../db');
         
                     await newPokemon.addType(dbTypes);
             
-                    res.send(`${name} created!`); // sweetAlert lib
+                    res.send(`${name} created!`);
                 } else {
                     res.send(`${name} it´s already created! You should pick another name`)
                 } 

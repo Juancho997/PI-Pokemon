@@ -50,6 +50,7 @@ export function getPokemonByName(name) {
     return async function (dispatch) {
         try {
             const response = await axios.get(`http://localhost:3001/api/pokemons?name=${name}`);
+            console.log('soy response de searchByName :D', response)
             return dispatch({
                 type: 'GET_POKEMON_BY_NAME',
                 payload: response.data

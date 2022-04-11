@@ -8,10 +8,10 @@ module.exports = {
             const pokeData = await loadAllPokeData();
             const { name } = req.query;
 
-            if (name) { //debería responder si no lo encuentra
+            if (name) {
                 const pokemon = pokeData.filter(p => p.name.toLowerCase() === name.toLowerCase());
                 if (pokemon.length === 0) {
-                    return res.send('We couldn´t find any Pokémons with that name. Try another!')
+                    return res.send('We couldn´t find any Pokémons with that name!')
                 }
                 return res.send(pokemon);
             }

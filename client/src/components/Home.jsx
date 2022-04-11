@@ -6,6 +6,7 @@ import { getPokemons, getTypes, filterBySource, filterByType, orderByName, order
 import Card from './Card';
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
+import Loader from '../common/Loader';
 
 
 export default function Home() {
@@ -18,8 +19,17 @@ export default function Home() {
     const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
     const indexOfLastPokemon = currentPage * pokemonsPerPage;
     const indexOfirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-    const currentPokemons = allPokemons.slice(indexOfirstPokemon, indexOfLastPokemon)
     const [order, setOrder] = useState('');
+    let currentPokemons
+
+    typeof  allPokemons === 'string' ? currentPokemons = [{
+        //mensaje de error en formato  objeto para poder mapearlo
+        id: '- -',
+        name : allPokemons,
+        image: 'https://c.tenor.com/DHGvsLhTOowAAAAC/meme-pikachu.gif',
+        types: ['-', '-']
+     }] :
+     currentPokemons = allPokemons.slice(indexOfirstPokemon, indexOfLastPokemon)
 
 
     const paginado = (pageNumber) => {
@@ -60,10 +70,13 @@ export default function Home() {
     };
 
     return (
+        <div>
+
+            
         <div className="container">
 
             <div>
-                <button className="titleButton" >
+                <button className="titleButton" onClick={(e) => handleClick(e)}>
                     <img 
                     src="https://i.pinimg.com/originals/bd/cd/20/bdcd20f5411ee5785889542d303ad4cb.png" 
                     alt="img err" 
@@ -128,7 +141,8 @@ export default function Home() {
                 allPokemons={allPokemons.length} //need numeric value
                 paginado={paginado}
             />
-
+        {
+                allPokemons.length === 0 ? <Loader /> :
             <div id="Cards">
             {
                 currentPokemons?.map(p => {
@@ -141,6 +155,12 @@ export default function Home() {
                 })
             }
             </div>
+
+        }
+    </div>
+        
+
+
 
         </div>
     )

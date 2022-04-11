@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonById, deletePokemon } from '../actions';
 import HomeButton from "../common/HomeButton";
+import Loader from "../common/Loader";
 import swal from 'sweetalert';
 
 export default function Detail() {
 
     const dispatch = useDispatch();
     const { id } = useParams();
- 
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -26,57 +27,60 @@ export default function Detail() {
             icon: "warning",
             buttons: ["No", "Yes"]
         })
-            
-        .then(response => {
-            if (response) {
-                swal({
-                    text: "Pokémon successfully deleted",
-                    icon: "success"
-                })}
+
+            .then(response => {
+                if (response) {
+                    swal({
+                        text: "Pokémon successfully deleted",
+                        icon: "success"
+                    })
+                }
                 dispatch(deletePokemon(pokemon.id));
                 navigate('/home');
             })
     };
 
-
-
-
     return (
-        <div id="detailDiv">
 
-            <HomeButton />
+        <div>
 
-            <div id="detailContainer">
+            {pokemon.length === 0 ? <Loader /> :
+                <div id="detailDiv">
 
-                <div id="divDetailImg">
-                    <img src={pokemon.image} width='400' heigth='400' />
-                </div>
+                    <HomeButton />
 
-                <div id="divDetailInfo">
+                    <div id="detailContainer">
 
-                    <div id="detailTitle">
-                        <h1>{pokemon.name}</h1>
-                        <h5>ID: {pokemon.id}</h5>
+                        <div id="divDetailImg">
+                            <img src={pokemon.image} width='400' heigth='400' />
+                        </div>
+
+                        <div id="divDetailInfo">
+
+                            <div id="detailTitle">
+                                <h1>{pokemon.name}</h1>
+                                <h5>ID: {pokemon.id}</h5>
+                            </div>
+
+                            <div id="detailStats">
+                                <h2>Stats</h2>
+                                <h3 id="hp">HP: {pokemon.hp} points.</h3>
+                                <h3 id="atk">Attack: {pokemon.attack} points.</h3>
+                                <h3 id="def">Defense: {pokemon.defense} points.</h3>
+                                <h3 id="spd">Speed: {pokemon.speed} points.</h3>
+                                <h3 id="he">Height: {pokemon.height} decimetres.</h3>
+                                <h3 id="we">Weight: {pokemon.weight} hectograms.</h3>
+                            </div>
+
+                        </div>
+                        {
+                            id.includes("-") && <button onClick={(e) => handleDeletePokemon(e)}>Delete Pokémon</button>
+                        }
+
                     </div>
 
-                    <div id="detailStats">
-                        <h2>Stats</h2>
-                        <h3 id="hp">HP: {pokemon.hp} points.</h3>
-                        <h3 id="atk">Attack: {pokemon.attack} points.</h3>
-                        <h3 id="def">Defense: {pokemon.defense} points.</h3>
-                        <h3 id="spd">Speed: {pokemon.speed} points.</h3>
-                        <h3 id="he">Height: {pokemon.height} decimetres.</h3>
-                        <h3 id="we">Weight: {pokemon.weight} hectograms.</h3>
-                    </div>
-
                 </div>
-                {
-                    id.includes("-") && <button onClick={(e) => handleDeletePokemon(e)}>Delete Pokémon</button>
-                }
-
-            </div>
-
+            }
         </div>
-    )
-
+        )
 }

@@ -53,7 +53,7 @@ div select:hover{
 
 
 .initContainer{
-  background-image:url("https://img.wallpapersafari.com/desktop/1920/1080/29/88/8V4tmW.jpg");
+  background-image:url("https://images2.alphacoders.com/967/967747.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover; 
@@ -78,7 +78,15 @@ width: 560px;
 height: 100px;
 } 
 
-
+#loader{
+  background-color: rgb(220, 33, 30);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover; 
+  object-fit: cover;
+  min-height: 100vh;
+  min-width: 100vh;
+}
 /* Home */
 
 .container{

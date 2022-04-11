@@ -320,7 +320,8 @@ export default function Create() {
                                         pokeStats.speed &&
                                         pokeStats.height &&
                                         pokeStats.weight &&
-                                        pokeStats.types.length > 0 ?
+                                        pokeStats.types.length > 0 &&
+                                        pokeStats.types.length <= 2 ?
                                         <div id="divCreateBttn">
                                             <button id="Button" type='submit'>Ok!</button>
                                         </div>

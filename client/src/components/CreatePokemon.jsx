@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
+
 import { createPokemon, getPokemons, getTypes } from '../actions';
+
 import { validate, sortDesc, baseStats } from '../controllers';
+
 import swal from 'sweetalert';
+
 import HomeButton from "../common/HomeButton";
 import Loader from "../common/Loader";
 

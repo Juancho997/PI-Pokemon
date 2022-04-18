@@ -52,7 +52,7 @@ export default function rootReducer(state = initialState, action) {
 
         case 'FILTER_BY_TYPE':
             const allPokemonTypes = state.allPokemons;
-            const filterTypes = action.payload === 'All' ? allPokemonTypes : allPokemonTypes.filter(pk => pk.types.includes(action.payload) || pk.types.name === action.payload)
+            const filterTypes = action.payload === 'All' ? allPokemonTypes : allPokemonTypes.filter(pk => pk.types.includes(action.payload))
             return {
                 ...state,
                 loadedPokemons: filterTypes
@@ -81,6 +81,12 @@ export default function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 loadedPokemons: sortedPokemonsAlph
+            };
+
+        case 'CLEAR_DETAIL':
+            return {
+                ...state,
+                pokemonDetail: []
             };
 
         case 'ORDER_BY_ATTACK':

@@ -110,3 +110,9 @@ export function orderByAttack(payload) {
         payload
     }
 };
+
+export function clearDetail(){
+    return {
+        type : 'CLEAR_DETAIL',
+    }
+};

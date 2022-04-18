@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonById, deletePokemon } from '../actions';
+import { getPokemonById, deletePokemon, clearDetail } from '../actions';
 import HomeButton from "../common/HomeButton";
 import Loader from "../common/Loader";
 import Swal from 'sweetalert2';
@@ -14,6 +14,7 @@ export default function Detail() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        dispatch(clearDetail())
         dispatch(getPokemonById(id))
     }, []);
 
@@ -76,6 +77,21 @@ export default function Detail() {
                                     <h3 id="we">Weight: {pokemon.weight} hectograms.</h3>
                                 </div>
                             </div>
+
+                            <div>
+                                <h2 id="detailStatsInfo">Types</h2>
+                                <div id="divTypes">
+                                {
+                                    pokemon.types &&
+                                    pokemon.types.map(t => {
+                                        return (
+                                            <h4 key={t}>{t}</h4>
+                                        )
+                                    })
+                                }
+                                </div>
+                            </div>
+
                         </div>
                         {
                             id.includes("-") && <button id="Button" onClick={(e) => handleDeletePokemon(e)}>Delete Pokémon</button>

@@ -9,8 +9,7 @@ function capitalize(s) {
 
 async function getDbData() {
     try {
-        const
-            pokeData = await Pokemon.findAll({
+        const pokeData = await Pokemon.findAll({
                 include: {
                     model: Type,
                     attributes: ['name'],
@@ -20,7 +19,22 @@ async function getDbData() {
                 }
             });
 
-        return pokeData;
+        const formatedData = pokeData.map(pk => {
+            return {
+            id: pk.id,
+            name: capitalize(pk.name),
+            types: pk.types.map((t) => t.name),
+            image: pk.image,
+            hp: pk.hp,
+            attack: pk.attack,
+            defense: pk.defense,
+            speed: pk.speed,
+            height: pk.height,
+            weight: pk.weight,
+            }
+        })
+        return formatedData;
+        
     } catch (err) {
         console.log(err)
     }
@@ -43,7 +57,7 @@ async function getApiData() {
         return {
             id: result.id,
             name: capitalize(result.name),
-            types: result.types.map((t) => t.type.name),
+            types: result.types.map((t) => capitalize(t.type.name)),
             image: result.sprites.front_default,
             hp: result.stats[0].base_stat,
             attack: result.stats[1].base_stat,
@@ -55,8 +69,6 @@ async function getApiData() {
     });
     return pokeData;
 };
-
-
 
 
 

@@ -22,7 +22,7 @@ export default function SearchBar(){
         <div>
             <input 
             type='text'
-            placeholder="Search Pokémon"
+            placeholder="Search Pokémon by name"
             onChange={(e)=>handleInputChange(e)}
             />
 

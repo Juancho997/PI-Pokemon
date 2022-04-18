@@ -68,7 +68,7 @@ export function capitalize(s) {
 
 
 export function sortDesc(a, b) {
-    if (a.name < b.name) return -1
-    else if (a.name > b.name) return 1
+    if (a < b) return -1
+    else if (a > b) return 1
     return 0
 };

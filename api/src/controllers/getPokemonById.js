@@ -11,7 +11,7 @@ module.exports = {
         try {
     
             if (id.includes(check)) {
-                pokemon = await Pokemon.findByPk(id, {
+                let found = await Pokemon.findByPk(id, {
                     include: {
                         model: Type,
                         attributes: ['name'],
@@ -20,6 +20,22 @@ module.exports = {
                         }
                     }
                 });
+
+                pokemon = {
+                    id: found.dataValues.id,
+                    name: found.dataValues.name,
+                    image : found.dataValues.image,
+                    hp: found.dataValues.hp,
+                    attack: found.dataValues.attack,
+                    defense : found.dataValues.defense,
+                    speed: found.dataValues.speed,
+                    height : found.dataValues.height,
+                    weight : found.dataValues.weight,
+                    types : found.dataValues.types.map(type => type.dataValues.name)
+                }
+                console.log(pokemon)
+                
+                console.log(found.dataValues.types)
                 
             } else {
                 const pokeData = await getApiData();
@@ -28,7 +44,6 @@ module.exports = {
                 let found = pokeData.filter(p => p.id === numId);
                 pokemon = found[0];
             }
-            console.log(pokemon)
             return res.send(pokemon);
     
         } catch (err) {

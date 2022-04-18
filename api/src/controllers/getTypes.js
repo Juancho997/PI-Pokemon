@@ -10,7 +10,8 @@ module.exports = {
             
     
             if (check.length > 0) {
-                res.send(check);
+                const mapedTypes = check.map(type => type.name)
+                return res.send(mapedTypes);
             } else {
     
                 const apiTypes = await axios.get('https://pokeapi.co/api/v2/type/')
@@ -22,7 +23,8 @@ module.exports = {
                 });
     
                 const loadPokeTypes = await Type.bulkCreate(pokeTypes);
-                return res.send(loadPokeTypes);
+                const mapedTypes = loadPokeTypes.map(type => type.name)
+                return res.send(mapedTypes);
     
             }
     

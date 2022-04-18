@@ -23,7 +23,7 @@ const { Pokemon, Type } = require('../db');
             
                     });
         
-                    await newPokemon.addType(dbTypes);
+                    await newPokemon.addType(dbTypes)
             
                     res.send(`${name} created!`);
                 } else {

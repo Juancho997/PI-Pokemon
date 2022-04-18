@@ -13,8 +13,11 @@ export default function Create() {
     const [pokeStats, setPokeStats] = useState(baseStats);
     const [errors, setErrors] = useState({});
 
+    //TIPOS
     const allTypes = useSelector(state => state.pokeTypes)
     const allTypesSorted = allTypes.sort(sortDesc)
+
+    const [availableTypes, setAvailableTypes] = useState(allTypesSorted);
 
     const allPokemons = useSelector(state => state.allPokemons)
 
@@ -62,8 +65,11 @@ export default function Create() {
         setErrors(validate({
             ...pokeStats,
             [e.target.name]: [...pokeStats.types, e.target.value]
-        }))
-
+        }));
+        setAvailableTypes([
+            ...allTypesSorted.filter(type => type !== e.target.value)
+        ])
+        //momento para modificar los tipos mapeados
     }
 
     const handleImgChange = (e) => {
@@ -118,11 +124,15 @@ export default function Create() {
         })
     };
 
-    const handleDelete = (el) => {
+    const handleDelete = (e) => {
         setPokeStats({
             ...pokeStats,
-            types: pokeStats.types.filter(t => t !== el)
+            types: pokeStats.types.filter(t => t !== e)
         })
+        setAvailableTypes([
+            ...allTypesSorted.filter(type => !pokeStats.types.includes(type))
+        ])
+        //acá debería restablecer el tipo borrado a la lista mapeada
     }
 
     return (
@@ -136,7 +146,7 @@ export default function Create() {
 
                         <HomeButton />
 
-                        <h1>Add your Pokémon to the Pokédex</h1>
+                        <h1 style={{ color: "#fff" }}>Add your Pokémon to the Pokédex</h1>
 
                         <div id="divForm">
 
@@ -251,13 +261,25 @@ export default function Create() {
                                     }
 
                                     <select id="inputSel" name='types' onChange={(e) => handleTypesChange(e)}>
-                                        <option>Type</option>
+                                        <option value="" disabled selected >Types</option>
+
+                                        {/* lista de tipos mapeados que se modifican al seleccionar unno en particular => DEBE SER ESTADO LOCAL */}
+
+
                                         {
-                                            allTypes && allTypesSorted.map(t => {
-                                                return <option key={t.name} id={t.id} value={t.name}>{t.name}</option>
-                                            })
+                                            pokeStats.types.length === 2 ?
+
+                                                <option>Maximum types selected</option>
+
+                                                :
+                                                availableTypes.map(t => {
+                                                    return <option key={t} id={t} value={t}>{t}</option>
+                                                })
 
                                         }
+
+
+
                                     </select>
                                     {
                                         errors.types && (
@@ -294,6 +316,7 @@ export default function Create() {
                                     {
                                         preview &&
                                         <div id="previewImgDiv">
+                                            <p id="previewText" style={{ color: "#fff" }}>Click the image to change it</p>
                                             <img
                                                 id="previewImg"
                                                 alt="previewImg"
@@ -306,7 +329,6 @@ export default function Create() {
                                                     });
                                                 }}
                                             />
-                                            <p id="previewText">Click the image to change it</p>
                                         </div>
                                     }
 
@@ -322,8 +344,12 @@ export default function Create() {
                                         pokeStats.weight &&
                                         pokeStats.types.length > 0 &&
                                         pokeStats.types.length <= 2 ?
-                                        <div id="divCreateBttn">
-                                            <button id="Button" type='submit'>Ok!</button>
+                                        <div style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }}>
+                                            <button id="divCreateBttn" type='submit'>Ok!</button>
                                         </div>
 
                                         :

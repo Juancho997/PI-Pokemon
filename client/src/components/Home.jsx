@@ -14,6 +14,8 @@ export default function Home() {
     const dispatch = useDispatch();
     const allPokemons = useSelector((state) => state.loadedPokemons);
     const allTypes = useSelector((state) => state.pokeTypes)
+    
+    console.log(allPokemons)
 
     const [currentPage, setCurrentPage] = useState(1)
     const [pokemonsPerPage, setPokemonsPerPage] = useState(12);
@@ -46,12 +48,16 @@ export default function Home() {
         dispatch(getTypes())
     }, [dispatch]);
 
+   
     const handleFilterType = (e) => {
+                setCurrentPage(1);
+
         dispatch(filterByType(e.target.value));
     };
 
 
     const handleFilterSource = (e) => {
+        setCurrentPage(1);
         dispatch(filterBySource(e.target.value));
     };
 
@@ -88,24 +94,24 @@ export default function Home() {
             <div id='filsortContainer'>
 
                 <select onChange={e => handleSortAZ(e)} >
-                    <option value="All">Alphabetical</option>
+                    <option value="All">Alphabetical order : Default</option>
                     <option value="AZ">A to Z</option>
                     <option value="ZA">Z to A</option>
                 </select>
 
                 <select onChange={e => handleSortAttack(e)}>
-                    <option value="All">Attack</option>
+                    <option value="All">Attack points order : Default</option>
                     <option value="atkDesc">More attack points</option>
                     <option value="atkAsc">Less attack points</option>
                 </select>
 
                 <select onChange={e => handleFilterType(e)}>
-                    <option value='All'>Types</option>
+                    <option value='All'>All types</option>
                     {
                         allTypes ?
                             allTypes.map(t => {
                                 return (
-                                    <option key={t.name} value={t.name.toLowerCase()}>{t.name}</option>
+                                    <option key={t} value={t}>{t}</option>
                                 )
                             })
                             :
@@ -115,7 +121,7 @@ export default function Home() {
                 </select>
 
                 <select onChange={e => handleFilterSource(e)}>
-                    <option value="All">All</option>
+                    <option value="All">All sources</option>
                     <option value="api">Stored in Api</option>
                     <option value="db">Created By User</option>
                 </select>

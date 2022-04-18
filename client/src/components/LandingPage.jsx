@@ -7,7 +7,7 @@ export default function LandingPage() {
     return (
         <div className="initContainer">
             <div>
-              <HomeButton />
+              <HomeButton className="initBtn" />
             </div>
         </div>
     )
